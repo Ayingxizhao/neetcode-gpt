@@ -15,10 +15,11 @@ class Solution:
         # Return: (dL_dw rounded to 5 decimals, dL_db rounded to 5 decimals)
         z = np.dot(x, w) + b
         y_hat = 1/(1+np.exp(-z))
-        error = y_hat - y_true
-        loss = 0.5 * error ** 2
+        error = y_hat - y_true # dl_dy
+        sigmoid_der = y_hat * (1-y_hat) #dy_dz
+        loss = 0.5 * error ** 2 
         # [x, ]
         # sclar * [x, ]
-        gradW = error * y_hat * (1-y_hat) * x
-        gradB = error * y_hat*(1-y_hat)
+        gradW = error * sigmoid_der * x # x is dz_dw
+        gradB = error * sigmoid_der
         return (np.round(gradW, 5), np.round(gradB, 5))
